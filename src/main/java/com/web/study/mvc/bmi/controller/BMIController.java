@@ -19,7 +19,7 @@ public class BMIController extends HttpServlet {
         rd.forward(req, resp);
     }
 
-   @Override
+    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String _id = req.getParameter("_id");
         String height = req.getParameter("height");
@@ -38,7 +38,10 @@ public class BMIController extends HttpServlet {
         // 重導到 bmi_form.jsp
         List<BMI> bmis = dao.queryAll();
         req.setAttribute("bmis", bmis);
+        req.setAttribute("avgHeight", bmis.stream().mapToDouble(b->b.getHeight()).average().getAsDouble());
+        req.setAttribute("avgWeight", bmis.stream().mapToDouble(b->b.getWeight()).average().getAsDouble());
         doGet(req, resp);
     }
 
+    
 }

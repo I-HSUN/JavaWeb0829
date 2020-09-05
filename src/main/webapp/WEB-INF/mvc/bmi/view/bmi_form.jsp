@@ -12,52 +12,60 @@
     </head>
     <body style="padding: 20px">
         <form class="pure-form" method="post" action="/JavaWeb0829/mvc/bmi">
-    <fieldset>
-        <legend>BMI Form</legend>
-        序號:<input type="number" placeholder="請輸入序號" id="_id" name="_id" /><p/>
-       身高:<input type="number" placeholder="請輸入身高"  id="height" name="height"/><p/>
-       體重:<input type="number" placeholder="請輸入體重"  id="weight" name="weight"/><p/>
-       性別:<input type="radio" value="1" id="sex" name="sex"/> 男
-            <input type="radio" value="2" id="sex" name="sex"/> 女<p/>
-    <button type="submit" class="pure-button pure-button-primary">儲存並計算</button>
-    <button type="reset" class="pure-button pure-button-primary">重製</button>
-    </fieldset>
-</form>
+            <fieldset>
+                <legend>BMI Form</legend>
+                序號:<input type="number" placeholder="請輸入序號" id="_id" name="_id" /><p/>
+                身高:<input type="number" placeholder="請輸入身高"  id="height" name="height"/><p/>
+                體重:<input type="number" placeholder="請輸入體重"  id="weight" name="weight"/><p/>
+                性別:<input type="radio" value="1" id="sex" name="sex"/> 男
+                <input type="radio" value="2" id="sex" name="sex"/> 女<p/>
+                <button type="submit" class="pure-button pure-button-primary">儲存並計算</button>
+                <button type="reset" class="pure-button pure-button-primary">重製</button>
+            </fieldset>
+        </form>
         <table class="pure-table pure-table-bordered">
-    <thead>
-        <tr>
-            <th>序號</th>
-            <th>身高</th>
-            <th>體重</th>
-            <th>性別</th>
-            <th>BMI</th>
-            <th>判斷</th>
-        </tr>
-    </thead>
-    <c:forEach var="bmi" items="${bmis}">
-    <tbody>
-        <tr>
-            <td>${bmi.id}</td>
-            <td>${bmi.height}</td>
-            <td>${bmi.weight}</td>
-            <td>${bmi.sex==1?"男":"女"}</td>
-            <td><fmt:formatNumber maxFractionDigits="2" value="${bmi.bmi}"/></td>
-<td>
-<c:if test="${bmi.bmi ge 18 && bmi.bmi lt 23}">
-正常
-</c:if>
-<c:if test="${bmi.bmi ge  23}">
-過重
-</c:if>
-<c:if test="${bmi.bmi lt 18}">
-過輕
-</c:if>
+            <thead>
+                <tr>
+                    <th>序號</th>
+                    <th>身高</th>
+                    <th>體重</th>
+                    <th>性別</th>
+                    <th>BMI</th>
+                    <th>判斷</th>
+                </tr>
+            </thead>
+            <c:forEach var="bmi" items="${bmis}">
+                <tbody>
+                    <tr>
+                        <td>${bmi.id}</td>
+                        <td>${bmi.height}</td>
+                        <td>${bmi.weight}</td>
+                        <td>${bmi.sex==1?"男":"女"}</td>
+                        <td><fmt:formatNumber maxFractionDigits="2" value="${bmi.bmi}"/></td>
+                <td>
+                <c:if test="${bmi.bmi ge 18 && bmi.bmi lt 23}">
+                    正常
+                </c:if>
+                <c:if test="${bmi.bmi ge  23}">
+                    過重
+                </c:if>
+                <c:if test="${bmi.bmi lt 18}">
+                    過輕
+                </c:if>
 
 
-</td>        
-</tr>
-    </c:forEach>
-    </tbody>
+                </td>        
+                </tr>
+            </c:forEach>
+                <tr>
+                    <td>平均</td>
+                    <td><fmt:formatNumber maxFractionDigits="1" value="${avgHeight}" /></td>
+                    <td><fmt:formatNumber maxFractionDigits="1" value="${avgWeight}" /></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+</tbody>
 </table>
-    </body>
+</body>
 </html>
