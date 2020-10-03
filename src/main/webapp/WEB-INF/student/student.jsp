@@ -6,7 +6,51 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Student CRUD Page</title>
         <script>
-            function addStudent() {
+            function getStudent(id) {
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var jo = JSON.parse(this.responseText); // 將文字資料轉成 json 物件
+                        switch (this.status) {
+                            case 200:
+                                document.getElementById("id").value = jo.id;
+                                document.getElementById("name").value = jo.name;
+                                document.getElementById("score").value = jo.score;
+                                break;
+                            case 400:
+                                alert(jo.text);
+                                break;
+                        }
+                    }
+                }
+                var uri = '/JavaWeb0829/rest/student/' + id;
+                xhttp.open('GET', uri, true);
+                xhttp.send();
+            }
+            
+            function deleteStudent(id) {
+                if(!confirm('確定要刪除 id = ' + id + ' 的資料嗎 ?')) {
+                    return;
+                }
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var jo = JSON.parse(this.responseText); // 將文字資料轉成 json 物件
+                        switch (this.status) {
+                            case 200:
+                                readStudent();
+                            case 400:
+                                alert(jo.text);
+                                break;
+                        }
+                    }
+                }
+                var uri = '/JavaWeb0829/rest/student/' + id;
+                xhttp.open('DELETE', uri, true);
+                xhttp.send();
+            }
+            
+            function updateStudent() {
                 // 抓取表單資料
                 var id = document.getElementById("id").value;
                 var name = document.getElementById("name").value;
@@ -26,8 +70,36 @@
                         switch (this.status) {
                             case 200:
                                 readStudent();
+                            case 400:
                                 alert(jo.text);
                                 break;
+                        }
+                    }
+                }
+                var uri = '/JavaWeb0829/rest/student/' + id;
+                xhttp.open('PUT', uri, true);
+                xhttp.setRequestHeader("Content-type", "application/json;charset=utf-8");
+                xhttp.send(jsonstring);
+            }
+            function addStudent() {
+                // 抓取表單資料
+                var name = document.getElementById("name").value;
+                var score = document.getElementById("score").value;
+                // 建立物件
+                var st = new Object();
+                st.id = 0;
+                st.name = name;
+                st.score = score * 1;
+                // 將物件 st 轉 json 字串
+                var jsonstring = JSON.stringify(st);
+                // 傳送到指定的地方: /JavaWeb0829/rest/student/
+                var xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4) {
+                        var jo = JSON.parse(this.responseText); // 將文字資料轉成 json 物件
+                        switch (this.status) {
+                            case 200:
+                                readStudent();
                             case 400:
                                 alert(jo.text);
                                 break;
@@ -69,7 +141,7 @@
                     var cell2 = row.insertCell(1);
                     var cell3 = row.insertCell(2);
                     var cell4 = row.insertCell(3);
-                    cell1.innerHTML = jo[i].id;
+                    cell1.innerHTML = '<a href="javascript:getStudent(' + jo[i].id + ')">' + jo[i].id + '</a>';
                     cell2.innerHTML = jo[i].name;
                     cell3.innerHTML = jo[i].score;
                     cell4.innerHTML = '<input type="button" value="刪除" onclick="deleteStudent(' + jo[i].id + ')">';
@@ -77,12 +149,12 @@
             }
         </script>
     </head>
-    <body style="padding: 20px">
+    <body style="padding: 20px" onload="readStudent()">
 
         <form id="student_form" class="pure-form">
             <fieldset>
                 <legend>Student CRUD</legend>
-                ID : <input type="text" id="id" name="id" placeholder="請輸入ID" /><p/>
+                ID : <input type="text" id="id" name="id" readonly /><p/>
                 Name : <input type="text" id="name" name="name" placeholder="請輸入名字" /><p/>
                 Score : <input type="number" id="score" name="score" placeholder="請輸入分數" /><p/>
                 <button type="button" id="add_button"    onclick="addStudent()"    class="pure-button pure-button-primary">新增</button>

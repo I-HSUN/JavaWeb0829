@@ -33,7 +33,13 @@ DELETE http://localhost:8080/JavaWeb0829/rest/student/1
 */
 @Path("student")
 public class StudentService {
-    private Set<Student> students = new LinkedHashSet<>();
+    
+        private Set<Student> students = new LinkedHashSet<>();
+    {
+        students.add(new Student(1, "John", 100));
+        students.add(new Student(2, "Mary", 90));
+        students.add(new Student(3, "Helen", 80));
+    }
     
     // uri: /rest/student/
     @Path("/")
@@ -77,6 +83,11 @@ public class StudentService {
     @Produces("application/json")
     public Response create(Student student) {
         if(student != null) {
+            int nextId = 1;
+            if(students.size() > 0) {
+                nextId = students.stream().mapToInt(s -> s.getId()).max().getAsInt() + 1;
+            }
+            student.setId(nextId);
             students.add(student);
             Message message = new Message(200, "Create success !");
             return Response.ok().entity(message).encoding("utf-8").build();

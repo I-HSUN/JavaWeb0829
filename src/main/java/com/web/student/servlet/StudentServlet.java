@@ -14,7 +14,7 @@ public class StudentServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/mvc/student/student.jsp");
+        RequestDispatcher rd = getServletContext().getRequestDispatcher("/WEB-INF/student/student.jsp");
         rd.forward(req, resp);
     }
     
