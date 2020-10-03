@@ -8,12 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-//@WebServlet(urlPatterns = "/servlet/hello")
-@WebServlet( "/servlet/hello")
-public class HelloServlet extends HttpServlet{
+//@WebServlet(urlPatterns = {"/servlet/hello"})
+@WebServlet("/servlet/hello")
+public class HelloServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().print("Hello Servlet " + new Date());
+        resp.getWriter().print("Hello Servlet : " + new Date());
     }
+    
 }

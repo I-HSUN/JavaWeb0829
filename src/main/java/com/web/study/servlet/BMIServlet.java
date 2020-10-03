@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-@WebServlet(name = "BMIServlet" ,urlPatterns = "/servlet/bmi")
-public class BMIServlet extends HttpServlet{
+
+@WebServlet(name = "bmiservlet", urlPatterns = {"/servlet/bmi"})
+public class BMIServlet extends HttpServlet {
     
     private void doHandler(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("utf-8");
@@ -48,6 +49,7 @@ public class BMIServlet extends HttpServlet{
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doHandler(req, resp);
     }
-
+    
+    
     
 }
