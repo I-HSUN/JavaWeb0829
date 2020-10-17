@@ -17,7 +17,8 @@ public class SSOLoginServlet extends BaseServlet {
         boolean checkCaptcher = checkCaptcha(req);
         // 1. 驗證 captcher
         if(!checkCaptcher) {
-            resp.getWriter().print("Captcher: " + checkCaptcher);
+            req.setAttribute("result", "Captcher: " + checkCaptcher);
+            forward(req, resp, "/forms/captcha/sso_login_form.jsp");
             return;
         }
         
@@ -26,7 +27,8 @@ public class SSOLoginServlet extends BaseServlet {
         String password = req.getParameter("password");
         boolean checkLogin = checkLogin(username, password);
         if(!checkLogin) {
-            resp.getWriter().print("Login: " + checkLogin);
+            req.setAttribute("result", "Login: " + checkLogin);
+            forward(req, resp, "/forms/captcha/sso_login_form.jsp");
             return;
         }
         
@@ -34,8 +36,7 @@ public class SSOLoginServlet extends BaseServlet {
         resp.getWriter().print("Login success !");
         HttpSession session = req.getSession(true);
         session.setAttribute("username", username);
-        RequestDispatcher rd = getServletContext().getRequestDispatcher("/captcha/sso/view/member");
-        rd.forward(req, resp);
+        forward(req, resp, "/captcha/sso/view/member");
         // resp.sendRedirect("/JavaWeb0829/captcha/sso/view/member"); // GET
     }
     
