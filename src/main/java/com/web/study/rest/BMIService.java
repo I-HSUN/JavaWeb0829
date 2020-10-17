@@ -18,7 +18,7 @@ public class BMIService {
     public String calcBMI(@PathParam("name") String name, @PathParam("h") Double h, @PathParam("w") Double w) {
         double bmi = w / Math.pow(h/100, 2);
         name = name.substring(0, 1).toUpperCase() + name.substring(1);
-        return String.format("%s bmi: %.2f", name, bmi);
+        return String.format("%s bmi: %.2f", name, bmi );
     }
     
 }
