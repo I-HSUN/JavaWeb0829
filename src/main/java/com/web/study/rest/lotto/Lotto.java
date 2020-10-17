@@ -24,7 +24,7 @@ public class Lotto {
 
     @Override
     public String toString() {
-        return "Lotto{" + "id=" + id + ", nums=" + 
+        return "Lotto{" + "id=" + id + ", nums=" + nums + '}';
     }
     
 }
