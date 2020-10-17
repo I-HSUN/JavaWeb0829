@@ -33,8 +33,7 @@ DELETE http://localhost:8080/JavaWeb0829/rest/student/1
 */
 @Path("student")
 public class StudentService {
-    
-        private Set<Student> students = new LinkedHashSet<>();
+    private Set<Student> students = new LinkedHashSet<>();
     {
         students.add(new Student(1, "John", 100));
         students.add(new Student(2, "Mary", 90));
